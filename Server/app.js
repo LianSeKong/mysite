@@ -17,6 +17,8 @@ const captchaRouter = require('./routes/captcha');
 const bannerRouter = require('./routes/banner');
 const uploadRouter = require('./routes/upload');
 const blogTypeRouter = require('./routes/blogType');
+const blogRouter = require('./routes/blog');
+
 
 var app = express();
 
@@ -48,7 +50,7 @@ app.use('/res/captcha', captchaRouter);
 app.use('/banner', bannerRouter)
 app.use('/api/upload', uploadRouter)
 app.use('/api/blogtype', blogTypeRouter);
-
+app.use('/api/blog', blogRouter);
 
 
 

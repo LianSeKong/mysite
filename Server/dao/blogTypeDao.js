@@ -44,3 +44,13 @@ module.exports.deleteBlogTypeDao = async (id) => {
     });
 
 }
+
+// update blog type model's  articleCount 
+module.exports.updateArticleCountDao = async (id) => {
+
+    const data = await blogTypeModel.findByPk(id);
+    data.articleCount++;
+    return data.save();
+    
+
+}
