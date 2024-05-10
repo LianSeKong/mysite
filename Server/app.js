@@ -18,7 +18,7 @@ const bannerRouter = require('./routes/banner');
 const uploadRouter = require('./routes/upload');
 const blogTypeRouter = require('./routes/blogType');
 const blogRouter = require('./routes/blog');
-
+const projectRouter = require('./routes/project');
 
 var app = express();
 
@@ -40,7 +40,7 @@ app.use(expressjwt({
   secret: md5(process.env.JWT_SIGN), // 秘钥
   algorithms: ['HS256'], // 算法
 }).unless({ // 排除不需要token认证的路由
-  path: [ /^\/api\/admin/,/^\/banner/, { url: "/res/captcha", methods: ["GET", "PUT", 'POST'] }]
+  path: [ { url: /^\/api\/blog.*$/, methods: ["GET"] }, { url: /^\/api\/project.*$/, methods: ["GET"] }, /^\/api\/admin/,/^\/banner/, { url: "/res/captcha", methods: ["GET", "PUT", 'POST'] }]
 }))
 
 
@@ -51,7 +51,7 @@ app.use('/banner', bannerRouter)
 app.use('/api/upload', uploadRouter)
 app.use('/api/blogtype', blogTypeRouter);
 app.use('/api/blog', blogRouter);
-
+app.use('/api/project', projectRouter);
 
 
 // error handler
