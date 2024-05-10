@@ -5,12 +5,7 @@ module.exports.findBlogTypeModelAllDao = async () => {
 }
 
 module.exports.findBlogTypeModelByIdDao = async (id) => {
-
-    return await blogTypeModel.findAll({
-        where: {
-            id
-        }
-    })
+    return await blogTypeModel.findByPk(id)
 }
 
 

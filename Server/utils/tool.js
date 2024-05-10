@@ -2,6 +2,7 @@ const md5  = require('md5');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
+const toc = require('markdown-toc');
 
 module.exports.formatResponse = function( { code, msg,data }) {
     return {
@@ -61,3 +62,68 @@ const upload = multer({ storage: storage })
 // const upload = multer({ dest: 'uploads/' })
 
 module.exports.upload = upload
+
+
+
+// deal toc 
+module.exports.handleToc = (info) => {
+    const result = toc(info.markdownContent).json();
+    info.toc = transfer(result);
+    delete info.markdownContent;
+
+
+    for (const i of result) {
+        let newStr = `<h${i.level} id="#${i.slug}">`;
+        info.htmlContent = info.htmlContent.replace(`<h${i.level}>`,  newStr);
+    }
+
+    return info
+    function createTocItem(item) {
+        return {
+            name: item.name,
+            anchor: item.slug,
+            level: item.lvl,
+            children: []
+        }
+    }
+
+
+    function transfer(flatArr) {
+        const stack = [];
+        const result = []
+
+        let min = 6;
+
+        for (const item of flatArr) {
+           if (item.lvl < min) {
+             min = item.lvl
+           }
+        }
+        for (const item of flatArr) {
+            const tocItem = createTocItem(item)
+            if (tocItem.level === min) {
+                result.push(tocItem)
+            }
+            helper(tocItem)
+        }
+
+        return result;
+
+
+         function helper(tocItem) {
+            const current = stack[stack.length - 1]
+
+            if (!current) {
+                stack.push(tocItem)
+            } else if (tocItem.level > current.level) {
+                current.children.push(tocItem)
+                stack.push(tocItem)
+            } else {
+                stack.pop();
+                helper(tocItem)
+            }
+        }
+    }
+
+    
+}
