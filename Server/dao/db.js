@@ -5,13 +5,15 @@ const banner = require('./model/bannerModel');
 const blogType = require('./model/blogTypeModel');
 const blog = require('./model/blogModel');
 const project = require('./model/projectModel');
+const message = require('./model/messageModel');
 const md5 = require('md5');
 (async () => {
 
     blogType.hasMany(blog, {foreignKey: 'categoryId', target: 'id'})
     blog.belongsTo(blogType, {foreignKey: 'categoryId', target: 'id', as: 'category'})
 
-
+    blog.hasMany(message, {foreignKey: 'blogId', target: 'id' })
+    message.belongsTo(blog, {foreignKey: 'blogId', target: 'id', as: 'blog'});
     // 同步
     await sequelize.sync({
         alter: true,

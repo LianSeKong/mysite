@@ -19,6 +19,8 @@ const uploadRouter = require('./routes/upload');
 const blogTypeRouter = require('./routes/blogType');
 const blogRouter = require('./routes/blog');
 const projectRouter = require('./routes/project');
+const messageRouter = require('./routes/message');
+
 
 var app = express();
 
@@ -52,7 +54,8 @@ app.use('/api/upload', uploadRouter)
 app.use('/api/blogtype', blogTypeRouter);
 app.use('/api/blog', blogRouter);
 app.use('/api/project', projectRouter);
-
+app.use('/api/message', messageRouter);
+app.use('/api/comment', messageRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
