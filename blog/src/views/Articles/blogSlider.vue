@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Menu :list="typeList" @select="handleSelect"></Menu>
+        <Menu  :list="typeList" @select="handleSelect"></Menu>
     </div>
 </template>
 
