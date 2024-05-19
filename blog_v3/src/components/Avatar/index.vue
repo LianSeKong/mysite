@@ -1,7 +1,7 @@
 <template>
   <div class="text-center select-none p-2.5 cursor-pointer">
     <img class="block object-cover mx-auto my-1" :src="imgSrc" :width="width" :height="height" alt="头像">
-    <span class=" font-['AliW'] text-lg text-[#ff5576]" >{{ description }}</span>
+    <span class=" text-lg font-mono font-bold text-[#ff5576]" >{{ description }}</span>
   </div>
 </template>
 
